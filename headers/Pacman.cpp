@@ -2,10 +2,14 @@
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
 using namespace std;
+
+// -----------------------------------------------------------------------------
+// Draw the object using translation
+// -----------------------------------------------------------------------------
+
 void Pacman::PacmanInput(GLFWwindow* window, GLuint shaderProgram, float deltaTime,
     std::vector<std::pair<int, int>> pellets)
 {
-   
     float velocity = vel * deltaTime;
     if (dstPellet.first == -1)
     {
@@ -14,7 +18,7 @@ void Pacman::PacmanInput(GLFWwindow* window, GLuint shaderProgram, float deltaTi
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
     {
         inputDir = 'r';
-        rotation = glm::rotate(mat4(1.0f), PI, glm::vec3(0, 0, 0)); // where x, y, z is axis of rotation (e.g. 0 1 0)
+        rotation = glm::rotate(mat4(1.0f), PI, glm::vec3(0, 0, 0));
     }
     else if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
     {
@@ -85,6 +89,9 @@ void Pacman::PacmanInput(GLFWwindow* window, GLuint shaderProgram, float deltaTi
         break;
     }
 }
+// -----------------------------------------------------------------------------
+// Determine the next position for pacman in the next frame
+// -----------------------------------------------------------------------------
 bool Pacman::findDst(const std::vector<std::pair<int, int>>& pellets)
 {
     vector<pair<int, int>> candidtates(4, srcPellet); //srcpallet 5,7
@@ -153,6 +160,11 @@ bool Pacman::findDst(const std::vector<std::pair<int, int>>& pellets)
     }
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// enable vertex attributes
+// -----------------------------------------------------------------------------
+
 void Pacman::setupAttrib() {
     glBindVertexArray(vao);
     glEnableVertexAttribArray(0);
@@ -161,31 +173,29 @@ void Pacman::setupAttrib() {
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GL_FLOAT), (void*)(3 * sizeof(GL_FLOAT)));
 }
 
-void Pacman::DrawObjects(GLuint shaderProgram, std::vector<std::pair<int, int>> objects, float r, float g, float b, std::vector<GLuint> textures,int index)
+// -----------------------------------------------------------------------------
+// Draw the object using translation
+// -----------------------------------------------------------------------------
+
+void Pacman::DrawObjects(GLuint shaderProgram, std::vector<std::pair<int, int>> objects, std::vector<GLuint> textures, int index)
 {
     auto usesTextureLocation = glGetUniformLocation(shaderProgram, "usesTexture");
-    glUniform1i(usesTextureLocation, usesTexture);
-        glBindTexture(GL_TEXTURE_2D, textures[index]);
-        setPos(posX , posY);
-        auto vertexColorLocation = glGetUniformLocation(shaderProgram, "u_Color");
-        glUniform4f(vertexColorLocation, r, g, b, 1.0f);
-        GLuint transformationmat = glGetUniformLocation(shaderProgram, "u_TransformationMat");
-        translation = translate(mat4(1), vec3(posX, posY, 0));
-        rotation = setRotationDir();
-        transformation = translation* rotation;
-        glUniformMatrix4fv(transformationmat, 1, false, glm::value_ptr(transformation));
-        glBindVertexArray(vao);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (const void*)0);
-     
-   
+    glUniform1i(usesTextureLocation, 1);
+    glBindTexture(GL_TEXTURE_2D, textures[index]);
+    setPos(posX, posY);
+    GLuint transformationmat = glGetUniformLocation(shaderProgram, "u_TransformationMat");
+    translation = translate(mat4(1), vec3(posX, posY, 0));
+    rotation = setRotationDir();
+    transformation = translation * rotation;
+    glUniformMatrix4fv(transformationmat, 1, false, glm::value_ptr(transformation));
+    glBindVertexArray(vao);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (const void*)0);
+
 }
 
-void Pacman::setPos(float pacmanX, float pacmanY)
-{
-    posX = pacmanX;
-    posY = pacmanY;
-}
-
+// -----------------------------------------------------------------------------
+// Set the rotation for pacman
+// -----------------------------------------------------------------------------
 glm::mat4 Pacman::setRotationDir()
 {
     glm::mat4 translateBeforeRotation;
@@ -212,6 +222,10 @@ glm::mat4 Pacman::setRotationDir()
     return rotation;
 }
 
+// -----------------------------------------------------------------------------
+// check for collisions
+// -----------------------------------------------------------------------------
+
 bool Pacman::CheckCollision(float posX1, float posY1, float posX2, float posY2, float collisionDistance)
 {
     vec2 A(posX1, posY1);
@@ -230,13 +244,17 @@ void Pacman::eatPellets(float x1, float y1, std::vector<std::pair<int, int> >& o
 
         if (CheckCollision(x1, y1, pelletsX, pelletsY, 0.4f))
         {
+         
             objects[i].first = -2;
             objects[i].second = -2;
             eatenPellets++;
+
         }
     }
 }
-
+// -----------------------------------------------------------------------------
+// Check collisions between pacman and ghosts
+// -----------------------------------------------------------------------------
 bool Pacman::pacGhostsCollision(std::vector <float> ghostX, std::vector <float> ghostY, std::vector<std::pair<int, int> > v_ghosts)
 {
     if (CheckCollision(posX, posY, ghostX[0] + v_ghosts[0].first, ghostY[0] + v_ghosts[0].second, 0.5f))
@@ -249,13 +267,12 @@ bool Pacman::pacGhostsCollision(std::vector <float> ghostX, std::vector <float> 
     }
     if (CheckCollision(posX, posY, ghostX[2] + v_ghosts[2].first, ghostY[2] + v_ghosts[2].second, 0.5f))
     {
-        std::cout << "Collison " << std::endl;
         return true;
     }
     if (CheckCollision(posX, posY, ghostX[3] + v_ghosts[3].first, ghostY[3] + v_ghosts[3].second, 0.5f))
     {
-        std::cout << "Collison " << std::endl;
         return true;
     }
     return false;
 }
+

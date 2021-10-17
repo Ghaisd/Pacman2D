@@ -1,5 +1,9 @@
 #include "Shader.h"
 
+// -----------------------------------------------------------------------------
+// compile the shader
+// -----------------------------------------------------------------------------
+
 Shader::Shader(const std::string& vertexShaderSrc,
 	const std::string& fragmentShaderSrc)
 {
@@ -27,29 +31,14 @@ Shader::Shader(const std::string& vertexShaderSrc,
 
 }
 
+// -----------------------------------------------------------------------------
+// RETURN THE SHADER ID
+// -----------------------------------------------------------------------------
 GLuint Shader::getID()
 {
 	return ID;
 }
 
-
-void Shader::SetUniform(const std::string& name, int value)
-{
-	auto uniformID = glGetUniformLocation(ID, name.c_str());
-	glUniform1f(uniformID, value);
-}
-
-void Shader::SetUniform(const std::string& name, float value)
-{
-	auto uniformID = glGetUniformLocation(ID, name.c_str());
-	glUniform1f(uniformID, value);
-}
-
-void Shader::SetUniform(const std::string& name, glm::vec2 value)
-{
-	auto uniformID = glGetUniformLocation(ID, name.c_str());
-	glUniform1f(uniformID, (value.x, value.y));
-}
 
 Shader::~Shader()
 {

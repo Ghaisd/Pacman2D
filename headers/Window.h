@@ -8,12 +8,13 @@ public:
     const GLFWvidmode* videoMode;
     GLuint m_Width, m_Height;
     const char* m_Title;
-    int frameWidth, frameHeight;
-
+    int frameWidth, frameHeight,
+    keyState = 0;
 public:
 
     Window(const char* title, int width, int height);
-   // bool init();
     static void handleResize(GLFWwindow* window, int height, int width);
     void switchFullScreen(bool fullScreen);
+    void changeFullScreen();
+
 };

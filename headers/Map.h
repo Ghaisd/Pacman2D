@@ -8,7 +8,9 @@ private:
         height = 0,
         nr = 0,
         nrOfGhosts = 0;
-    
+
+    void LoadMap(const char* filepath);
+    void GenerateGhosts();
 public:
     std::vector<std::pair<int, int>> walls;
     std::vector<std::pair<int, int>> pellets;
@@ -18,6 +20,8 @@ public:
     std::vector<std::pair<int, int>> walkable;
     std::vector <int> map;
 
-    void LoadMap(const char* filepath);
-    void generateGhosts();
+    Map(const char* filepath);
+
+  
+   
 };

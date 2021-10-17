@@ -41,74 +41,21 @@ public:
 
         return tex;
     }
-   
+
+// -----------------------------------------------------------------------------
+// Load the texture image, create OpenGL texture, and bind it to the current context
+// -----------------------------------------------------------------------------
+    void loadAlltextures(std::vector<GLuint>& textures)
+    {
+        textures[0] = load_opengl_texture("textures/PacmanRight.png", 2);
+        textures[1] = load_opengl_texture("textures/PacmanRight2.png", 1);
+        textures[2] = load_opengl_texture("textures/PacmanRight3.png", 0);
+        textures[3] = load_opengl_texture("textures/PacmanRight1.png", 3);
+        textures[4] = load_opengl_texture("textures/ghostLeft.png", 4);
+        textures[5] = load_opengl_texture("textures/ghostUp.png", 5);
+        textures[6] = load_opengl_texture("textures/ghostRight.png", 6);
+        textures[7] = load_opengl_texture("textures/ghostDown.png", 7);
+    }
+
 };
 
-
-
-
-//
-//#ifndef __GAMESHADER_H_
-//#define __GAMESHADER_H_
-//
-//#include <string>
-//
-//static const std::string gameVertexShaderSrc = R"(
-//#version 430 core
-//
-//layout(location = 0) in vec3 a_Position;
-//
-////We specify our uniforms. We do not need to specify locations manually, but it helps with knowing what is bound where.
-////layout(location=0) uniform mat4 u_TransformationMat = mat4(1);
-//layout(location=1) uniform mat4 u_ViewMat           = mat4(1);
-//layout(location=2) uniform mat4 u_ProjectionMat     = mat4(1);
-///** Inputs */
-//in vec2 aPosition;
-//in vec3 aColor;
-//in vec2 aTexcoord;
-//
-//
-///** Outputs */
-//out vec3 vsColor;
-//out vec2 vsTexcoord;
-//
-//
-//
-//
-//void main()
-//{
-//vsColor = aColor;
-//vsTexcoord = aTexcoord;
-////We multiply our matrices with our position to change the positions of vertices to their final destinations.
-//gl_Position = u_ProjectionMat * u_ViewMat * /*u_TransformationMat **/ vec4(a_Position, 1.0f);
-//}
-//)";
-//
-//static const std::string gameFragmentShaderSrc = R"(
-//#version 430 core
-//
-///** Inputs */
-//in vec3 vsColor;
-//in vec2 vsTexcoord;
-//
-//out vec4 color;
-//out vec4 outColor;
-//
-//uniform vec4 u_Color;
-///** Binding specifies what texture slot the texture should be at (in this case TEXTURE0) */
-//uniform sampler2D uTextureA;
-//void main()
-//{
-//vec4 textColorA = texture(uTextureA, vsTexcoord);
-//color = u_Color;
-//if (textColorA.x > 0.95 && textColorA.y > 0.95 && textColorA.z > 0.95)
-//{
-//discard;
-//}
-//
-//   outColor =  textColorA /** vec4(vsColor, 1.0)*/;
-//}
-//)";
-//
-//
-//#endif 

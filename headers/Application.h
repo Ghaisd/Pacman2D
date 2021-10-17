@@ -3,7 +3,7 @@ class Application
 public:
 
 
- 
+
     // -----------------------------------------------------------------------------
     // Clean VAO
     // -----------------------------------------------------------------------------
@@ -53,7 +53,7 @@ public:
 
         //Matrix which defines where in the scene our camera is
         //                           Position of camera     Direction camera is looking     Vector pointing upwards
-       // glm::mat4 view = glm::lookAt(glm::vec3(0, 0, -1), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+        glm::mat4 view = glm::lookAt(glm::vec3(0, 0, -1), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 
         //Get unforms to place our matrices into
         GLuint projmat = glGetUniformLocation(shaderprogram, "u_ProjectionMat");

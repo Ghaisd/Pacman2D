@@ -1,7 +1,7 @@
 #include "Libraries.h"
-#include "GameObject.h"
+#include "StaticObject.h"
 
-class Wall : public GameObject
+class Wall : public StaticObject
 {
 
 public:
