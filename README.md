@@ -3,16 +3,24 @@
 Running the program
 
 To run the program, simply build the program using Visual Studio 2019, opening the repository as a folder, building CMakeLists.txt (by saving it with ctrl+s), and building & running Pacman2D.exe (Tested on windows)
+
+
 ** Game control:
 Pacman move using WASD.
 Escape key will shutdown the game.
 F: full screen mode, H: back to windowed mode
+
+
 ** Optional Features:
 1- the pellets has been changed into circle
 2- tried to apply multisampling but did not work
 3- The screen is resizable(Full screen mode / windowed mode)
 4- Magic pellets have been drawn (with no functionality).
+
+
 ** Introduction
+
+
 the program build and run properly in machines with:
 
 Recent compiler (Visual studio 2019 or GCC >= 9.0)
@@ -21,6 +29,7 @@ CMake (>= 3.15)
 Recent GLFW (>= 3.3.2)
 GLAD
 C++ >= 11
+
 
 ** Scenario
 
@@ -64,6 +73,7 @@ down, left, right). Pacman cannot move outside the map.
 
 
 ** Ghosts
+
 
 The program place and display /Ghosts/ (number of /ghosts/ decided by the
 group) characters which move only inside the /tunnel/ areas (/Ghosts/ do
