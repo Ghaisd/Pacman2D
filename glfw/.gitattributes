@@ -1,5 +1,5 @@
-*.html linguist-detectable=false
 *.h linguist-language=C++
+*.html linguist-language=C++
 *.cpp linguist-language=C++
 .gitignore export-ignore
 .gitattributes export-ignore
